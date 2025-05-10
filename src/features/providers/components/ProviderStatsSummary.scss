@@ -1,0 +1,89 @@
+/* src/features/providers/components/ProviderStatsSummary.css */
+.stats-summary {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+  
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+  
+  .stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px 5px;
+  }
+  
+  .stats-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 1.5rem;
+  }
+  
+  .services-icon {
+    background-color: #3b82f6; /* Azul */
+  }
+  
+  .reviews-icon {
+    background-color: #0ea5e9; /* Azul claro */
+  }
+  
+  .jobs-icon {
+    background-color: #2563eb; /* Azul oscuro */
+  }
+  
+  .rating-icon {
+    background-color: #4f46e5; /* Púrpura */
+  }
+  
+  .views-icon {
+    background-color: #6366f1; /* Índigo */
+  }
+  
+  .stats-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .star-icon {
+    color: #f59e0b;
+    margin-left: 2px;
+  }
+  
+  .stats-label {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  
+  @media (max-width: 768px) {
+    .stats-item {
+      padding: 10px;
+    }
+    
+    .stats-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+    
+    .stats-value {
+      font-size: 1.5rem;
+    }
+  }

@@ -1,0 +1,60 @@
+/* src/features/providers/styles/reviews.css */
+.star {
+    color: #e0e0e0;
+    font-size: 1.25rem;
+  }
+  
+  .star.filled {
+    color: #ffb400;
+  }
+  
+  .review-item {
+    padding: 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .review-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .stat-item {
+    padding: 15px 10px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0d6efd;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  
+  .action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    color: #333;
+    transition: all 0.2s;
+  }
+  
+  .action-item:hover {
+    background-color: #e2e6ea;
+    transform: translateY(-2px);
+  }
+  
+  .action-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  
+  .action-text {
+    font-weight: 500;
+  }
