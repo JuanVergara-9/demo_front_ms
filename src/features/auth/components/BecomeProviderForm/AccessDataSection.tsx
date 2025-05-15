@@ -122,18 +122,35 @@ const AccessDataSection: React.FC<AccessDataSectionProps> = ({
         )}
       </div>
       
+      {/* Nuevo checkbox de términos y condiciones */}
       <div className="pt-2">
-        <p className="text-sm text-gray-500">
-          Al registrarte, aceptas nuestros{' '}
-          <a href="/terms" className="text-blue-600 hover:underline">
-            términos y condiciones
-          </a>{' '}
-          y{' '}
-          <a href="/privacy" className="text-blue-600 hover:underline">
-            política de privacidad
-          </a>
-          .
-        </p>
+        <div className="flex items-start">
+          <div className="flex items-center h-5">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              checked={formData.terms}
+              onChange={handleChange}
+              className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+          </div>
+          <div className="ml-3 text-sm">
+            <label htmlFor="terms" className="text-gray-600">
+              Acepto los{' '}
+              <a href="/terms" className="text-blue-600 hover:underline">
+                términos y condiciones
+              </a>{' '}
+              y la{' '}
+              <a href="/privacy" className="text-blue-600 hover:underline">
+                política de privacidad
+              </a>
+            </label>
+            {errors.terms && (
+              <p className="mt-1 text-sm text-red-600">{errors.terms}</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

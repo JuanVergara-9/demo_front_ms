@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaStar, FaMapMarkerAlt } from 'react-icons/fa';
-import axios from 'axios';
+import apiClient from '../../../api/apiClient'; // Reemplazar axios por nuestro apiClient
 import { getImageUrl, getInitials } from '../../../utils/imageUtils';
 import { Provider } from '../types';
 import { categoryService } from '../../categories/services/categoryService';
@@ -50,24 +50,29 @@ const FeaturedProviders: React.FC = () => {
     loadCategoryNames();
   }, []);
 
-  useEffect(() => {
-    const fetchProviders = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get('http://localhost:3000/api/providers/featured');
-        setProviders(response.data);
-        setError(null);
-      } catch (err) {
-        console.error("Error al cargar proveedores destacados:", err);
-        setError("No se pudieron cargar los proveedores destacados");
-        setProviders([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchProviders();
-  }, []);
+useEffect(() => {
+  const fetchProviders = async () => {
+    setIsLoading(true);
+    try {
+      // Usar apiClient en lugar de axios directo
+      const response = await apiClient.get('/providers/featured'); 
+      console.log("Respuesta de featured providers:", response.data);
+      
+      // Asegurarnos de que siempre sea un array
+      const providersData = Array.isArray(response.data) ? response.data : [];
+      setProviders(providersData);
+      setError(null);
+    } catch (err) {
+      console.error("Error al cargar proveedores destacados:", err);
+      setError("No se pudieron cargar los proveedores destacados");
+      setProviders([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  fetchProviders();
+}, []);
 
   // Renderiza estrellas basadas en el rating
   const renderStars = (rating: number = 0) => {
@@ -198,8 +203,8 @@ const FeaturedProviders: React.FC = () => {
               </div>
               
               <div className="mb-3">
-                {renderStars(provider.rating || 0)}
-              </div>
+  {renderStars(provider.averageRating || provider.rating || 0)}
+</div>
               
               <p className="text-gray-700 mb-6 flex-grow line-clamp-3 min-h-[4.5rem]">
                 {provider.description || "Servicios profesionales de calidad"}

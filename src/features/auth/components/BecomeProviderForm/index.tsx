@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { useProviderForm } from './useProviderForm';
 import StepProgress from './StepProgress';
@@ -32,7 +32,7 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
     handleChange,
     handleFileChange,
     handleCategoriesChange,
-    handleSubcategoriesChange, // Asegúrate de incluir esta función
+    handleSubcategoriesChange,
     handleSubmit,
     currentStep,
     totalSteps,
@@ -41,8 +41,16 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
     goToStep
   } = useProviderForm(isNewUser);
 
+  // Depuración: mostrar el paso actual cuando cambia
+  useEffect(() => {
+    console.log(`Paso actual: ${currentStep} de ${totalSteps}`);
+    console.log('Datos del formulario:', formData);
+  }, [currentStep, formData, totalSteps]);
+
   // Renderizar el paso actual
   const renderStep = () => {
+    console.log(`Renderizando paso ${currentStep}`);
+    
     switch (currentStep) {
       case 1: // Datos de Acceso
         return (
@@ -62,9 +70,9 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
           <PersonalInfoSection
             formData={formData}
             errors={errors}
-            isNewUser={false} 
+            isNewUser={isNewUser} // CORREGIDO: Usar el valor real de isNewUser
             handleChange={handleChange}
-            showPassword={showPassword} // Añadir props faltantes
+            showPassword={showPassword}
             setShowPassword={setShowPassword}
             showConfirmPassword={showConfirmPassword}
             setShowConfirmPassword={setShowConfirmPassword}
@@ -85,14 +93,14 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
             errors={errors}
             handleChange={handleChange}
             handleCategoriesChange={handleCategoriesChange}
-            handleSubcategoriesChange={handleSubcategoriesChange} // Añadir prop faltante
+            handleSubcategoriesChange={handleSubcategoriesChange}
           />
         );
       case 5: // Documentación
         return (
           <DocumentsSection
             formData={formData}
-            // errors={errors} - Quitar esta prop si no existe en DocumentsSectionProps
+            errors={errors} // AÑADIDO: Pasar errores al componente
             handleFileChange={handleFileChange}
             profilePreview={profilePreview}
             certificateFileName={certificateFileName}
@@ -121,11 +129,26 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
         onStepClick={goToStep}
       />
       
+      {/* AÑADIDO: Visualización mejorada de errores */}
+      {Object.keys(errors).length > 0 && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+          <p className="text-red-700 font-medium">Por favor corrige los siguientes errores:</p>
+          <ul className="list-disc pl-5 mt-2">
+            {Object.values(errors).map((error, index) => (
+              <li key={index} className="text-red-600 text-sm">{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      
       <form onSubmit={(e) => {
         e.preventDefault();
+        console.log(`Formulario enviado. Paso actual: ${currentStep}, Total: ${totalSteps}`);
         if (currentStep === totalSteps) {
+          console.log('Enviando formulario completo');
           handleSubmit(e);
         } else {
+          console.log('Avanzando al siguiente paso');
           nextStep();
         }
       }} className="space-y-8">
@@ -137,7 +160,10 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
           {currentStep > 1 ? (
             <button
               type="button"
-              onClick={prevStep}
+              onClick={() => {
+                console.log('Retrocediendo al paso anterior');
+                prevStep();
+              }}
               className="py-2 px-4 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />
@@ -170,6 +196,21 @@ const BecomeProviderForm: React.FC<{ isNewUser: boolean }> = ({ isNewUser }) => 
               </div>
             )}
           </button>
+        </div>
+
+        {/* AÑADIDO: Botones de depuración (eliminar en producción) */}
+        <div className="mt-4 flex space-x-2 text-xs bg-gray-50 p-2 rounded">
+          <span className="text-gray-500">Navegar directo:</span>
+          {[...Array(totalSteps)].map((_, idx) => (
+            <button 
+              key={idx}
+              type="button" 
+              onClick={() => goToStep(idx + 1)}
+              className={`${currentStep === idx + 1 ? 'bg-blue-200' : 'bg-gray-200'} px-2 py-1 rounded`}
+            >
+              Paso {idx + 1}
+            </button>
+          ))}
         </div>
       </form>
     </div>

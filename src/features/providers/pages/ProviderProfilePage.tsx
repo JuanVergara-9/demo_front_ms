@@ -66,6 +66,10 @@ const ProviderProfilePage: React.FC = () => {
     description: rawProvider.description || '',
     dniCuit: rawProvider.dniCuit || rawProvider.dni_cuit || '',
 
+    // Añadido: email y profession
+    email: rawProvider.email || (rawProvider.user && rawProvider.user.email) || '',
+    profession: rawProvider.profession || '',
+
     // Mapeo mejorado de categorías
     categories: Array.isArray(rawProvider.categories) 
       ? rawProvider.categories.map(cat => {

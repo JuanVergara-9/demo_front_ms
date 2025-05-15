@@ -17,6 +17,7 @@ interface DocumentsSectionProps {
   profilePreview: string | null;
   certificateFileName: string | null;
   portfolioFileName: string | null;
+  errors: { [key: string]: string };
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -21,6 +21,8 @@ export interface ProviderProfileData {
   
   // Tipo para la respuesta completa de un proveedor desde la API
   export interface Provider {
+    email: ReactNode;
+    profession: string;
     id: number;
     userId: number;
     firstName: string;

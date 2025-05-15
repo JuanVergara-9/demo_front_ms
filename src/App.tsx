@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Modal Demo
+import DemoInfoModal from './components/common/DemoInfoModal';
+
 // Layouts
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './components/layout/AuthLayout';
@@ -36,6 +39,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <AuthProvider>
+        {/* Modal Informativo - fuera de los Routes para que esté disponible en toda la app */}
+        <DemoInfoModal />
+        
         <Routes>
           {/* Rutas públicas con MainLayout */}
           <Route element={<MainLayout />}>
